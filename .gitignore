@@ -1,1 +1,7 @@
 target
+.classpath
+.project
+bin
+*.jar
+*.war
+.settings
