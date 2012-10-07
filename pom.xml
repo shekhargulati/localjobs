@@ -7,15 +7,28 @@
 	<version>1.0</version>
 	<name>localjobs</name>
 	<properties>
+		<aspectj.version>1.6.12</aspectj.version>
 		<java-version>1.6</java-version>
-		<org.springframework.social-version>1.1.0.BUILD-SNAPSHOT</org.springframework.social-version>
-		<org.springframework.social.linkedin-version>1.0.0.BUILD-SNAPSHOT</org.springframework.social.linkedin-version>
-		<org.springframework-version>3.2.0.BUILD-SNAPSHOT</org.springframework-version>
-		<org.springframework.security-version>3.1.0.RELEASE</org.springframework.security-version>
+		<org.springframework-version>3.1.2.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.6.1</org.slf4j-version>
 		<spring.mongodb.version>1.1.0.M1</spring.mongodb.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
@@ -60,6 +73,11 @@
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>${org.springframework-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

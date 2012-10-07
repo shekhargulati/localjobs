@@ -13,95 +13,87 @@ import flexjson.JSONSerializer;
 @Document(collection = "jobs")
 public class Job {
 
-	@Id
-	private String id;
+  @Id
+  private String id;
 
+  private CompanyInformation company;
 
-	private CompanyInformation company;
+  private String jobTitle;
 
+  private double[] location;
 
-	private String jobTitle;
+  private String[] skills;
 
-	private double[] location;
+  private String formattedAddress;
 
-	private String[] skills;
+  public Job() {
 
-	private String formattedAddress;
+  }
 
-	public Job() {
+  public String getId() {
+    return id;
+  }
 
-	}
+  public void setId(String id) {
+    this.id = id;
+  }
 
-	public String getId() {
-		return id;
-	}
+  public CompanyInformation getCompany() {
+    return company;
+  }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+  public void setCompany(CompanyInformation company) {
+    this.company = company;
+  }
 
+  public void setJobTitle(String jobTitle) {
+    this.jobTitle = jobTitle;
+  }
 
-	public CompanyInformation getCompany() {
-		return company;
-	}
+  public String getJobTitle() {
+    return jobTitle;
+  }
 
-	public void setCompany(CompanyInformation company) {
-		this.company = company;
-	}
+  public void setLocation(double[] location) {
+    this.location = location;
+  }
 
+  public double[] getLocation() {
+    return location;
+  }
 
+  public void setSkills(String[] skills) {
+    this.skills = skills;
+  }
 
-	public void setJobTitle(String jobTitle) {
-		this.jobTitle = jobTitle;
-	}
+  public String[] getSkills() {
+    return skills;
+  }
 
-	public String getJobTitle() {
-		return jobTitle;
-	}
+  public void setFormattedAddress(String formattedAddress) {
+    this.formattedAddress = formattedAddress;
+  }
 
-	public void setLocation(double[] location) {
-		this.location = location;
-	}
+  public String getFormattedAddress() {
+    return formattedAddress;
+  }
 
-	public double[] getLocation() {
-		return location;
-	}
+  public String toJson() {
+    return new JSONSerializer().include("location").include("company").include("skills").exclude("*.class")
+      .serialize(this);
+  }
 
-	public void setSkills(String[] skills) {
-		this.skills = skills;
-	}
+  public static Job fromJson(String json) {
+    return new JSONDeserializer<Job>().use(null, Job.class).deserialize(json);
+  }
 
-	public String[] getSkills() {
-		return skills;
-	}
+  public static String toJsonArray(Collection<Job> collection) {
+    return new JSONSerializer().include("location").include("company").include("skills").exclude("*.class")
+      .serialize(collection);
+  }
 
-	public void setFormattedAddress(String formattedAddress) {
-		this.formattedAddress = formattedAddress;
-	}
-
-	public String getFormattedAddress() {
-		return formattedAddress;
-	}
-
-	public String toJson() {
-		return new JSONSerializer().include("location").include("company").include("skills").exclude("*.class")
-				.serialize(this);
-	}
-
-	public static Job fromJson(String json) {
-		return new JSONDeserializer<Job>().use(null, Job.class)
-				.deserialize(json);
-	}
-
-	public static String toJsonArray(Collection<Job> collection) {
-		return new JSONSerializer().include("location").include("company").include("skills").exclude("*.class")
-				.serialize(collection);
-	}
-
-	public static Collection<Job> fromJsonArray(String json) {
-		return new JSONDeserializer<List<Job>>()
-				.use(null, ArrayList.class).use("location", Job.class)
-				.deserialize(json);
-	}
+  public static Collection<Job> fromJsonArray(String json) {
+    return new JSONDeserializer<List<Job>>().use(null, ArrayList.class).use("location", Job.class).deserialize(json);
+  }
 
 }

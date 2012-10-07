@@ -1,35 +1,33 @@
 package com.localjobs.domain;
 
-
 public class CompanyInformation {
 
-	private int companyId;
-	private String companyName;
-	
-	
-	public CompanyInformation() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public int getCompanyId() {
-		return companyId;
-	}
+  private int companyId;
+  private String companyName;
 
-	public void setCompanyId(int companyId) {
-		this.companyId = companyId;
-	}
+  public CompanyInformation() {
+    // TODO Auto-generated constructor stub
+  }
 
-	public String getCompanyName() {
-		return companyName;
-	}
+  public int getCompanyId() {
+    return companyId;
+  }
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+  public void setCompanyId(int companyId) {
+    this.companyId = companyId;
+  }
 
-	@Override
-	public String toString() {
-		return "CompanyInformation [companyName=" + companyName + "]";
-	}
-	
+  public String getCompanyName() {
+    return companyName;
+  }
+
+  public void setCompanyName(String companyName) {
+    this.companyName = companyName;
+  }
+
+  @Override
+  public String toString() {
+    return "CompanyInformation [companyName=" + companyName + "]";
+  }
+
 }
