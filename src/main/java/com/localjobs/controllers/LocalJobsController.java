@@ -53,7 +53,7 @@ public class LocalJobsController {
   }
 
   @RequestMapping("/jobs/near")
-  public ResponseEntity<String> allJobsNear(@RequestParam("latitude") double latitude,
+  public ResponseEntity<String> allJobsNearToLatitudeAndLongitude(@RequestParam("latitude") double latitude,
       @RequestParam("longitude") double longitude) {
 
     HttpHeaders headers = new HttpHeaders();
@@ -74,7 +74,7 @@ public class LocalJobsController {
   }
 
   @RequestMapping("/jobs/near/{skill}")
-  public ResponseEntity<String> allJobsNearWithSkill(@PathVariable("skill") String skill,
+  public ResponseEntity<String> allJobsNearLatitideAndLongitudeWithSkill(@PathVariable("skill") String skill,
       @RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
 
     HttpHeaders headers = new HttpHeaders();
