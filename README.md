@@ -60,16 +60,16 @@ git push
 
 The application will be up and running on OpenShift and you can see results on following urls
 
-http://localjobs-<domain-name>.rhcloud.com/
+http://localjobs-domain-name.rhcloud.com/
 
-http://localjobs-<domain-name>.rhcloud.com/jobs
+http://localjobs-domain-name.rhcloud.com/jobs
 
-http://localjobs-<domain-name>.rhcloud.com/id
+http://localjobs-domain-name.rhcloud.com/id
 
-http://localjobs-<domain-name>.rhcloud.com/jobs/near?latitude=48.1530699&longitude=11.5992338
+http://localjobs-domain-name.rhcloud.com/jobs/near?latitude=48.1530699&longitude=11.5992338
 
-http://localjobs-<domain-name>.rhcloud.com/jobs/near/AM%20TUCHERPARK%207,MUNICH,%20GERMANY/
+http://localjobs-domain-name.rhcloud.com/jobs/near/AM%20TUCHERPARK%207,MUNICH,%20GERMANY/
 
-http://localjobs-<domain-name>.rhcloud.com/jobs/near/mongodb?latitude=48.1530699&longitude=11.5992338
+http://localjobs-domain-name.rhcloud.com/jobs/near/mongodb?latitude=48.1530699&longitude=11.5992338
 
-http://localjobs-<domain-name>.rhcloud.com/jobs/near/AM%20TUCHERPARK%207,MUNICH,%20GERMANY/mongodb
+http://localjobs-domain-name.rhcloud.com/jobs/near/AM%20TUCHERPARK%207,MUNICH,%20GERMANY/mongodb
