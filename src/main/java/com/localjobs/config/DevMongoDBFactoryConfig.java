@@ -17,21 +17,22 @@ import com.mongodb.Mongo;
 @PropertySource("classpath:com/localjobs/config/dev.properties")
 public class DevMongoDBFactoryConfig implements MongoDbFactoryConfig {
 
-  @Inject
-  Environment environment;
+	@Inject
+	Environment environment;
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see com.openshift.notebook.core.config.MongoDbConfig#mongoDbFactory()
-   */
-  @Override
-  @Bean
-  public MongoDbFactory mongoDbFactory() throws Exception {
-    Mongo mongo =
-        new Mongo(environment.getProperty("mongo.host"), Integer.parseInt(environment.getProperty("mongo.port")));
-    MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo, environment.getProperty("mongo.db"));
-    return mongoDbFactory;
-  }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.openshift.notebook.core.config.MongoDbConfig#mongoDbFactory()
+	 */
+	@Override
+	@Bean
+	public MongoDbFactory mongoDbFactory() throws Exception {
+		Mongo mongo = new Mongo(environment.getProperty("mongo.host"),
+				Integer.parseInt(environment.getProperty("mongo.port")));
+		MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo,
+				environment.getProperty("mongo.db"));
+		return mongoDbFactory;
+	}
 
 }

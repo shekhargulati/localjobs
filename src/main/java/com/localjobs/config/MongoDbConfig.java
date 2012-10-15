@@ -9,13 +9,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Configuration
 public class MongoDbConfig {
 
-  @Inject
-  private MongoDbFactoryConfig mongoDbFactoryConfig;
+	@Inject
+	private MongoDbFactoryConfig mongoDbFactoryConfig;
 
-  @Bean
-  public MongoTemplate mongoTemplate() throws Exception {
-    MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactoryConfig.mongoDbFactory());
-    return mongoTemplate;
-  }
+	@Bean
+	public MongoTemplate mongoTemplate() throws Exception {
+		MongoTemplate mongoTemplate = new MongoTemplate(
+				mongoDbFactoryConfig.mongoDbFactory());
+		return mongoTemplate;
+	}
 
 }

@@ -11,13 +11,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @ComponentScan(basePackages = "com.localjobs")
 public class ApplicationConfig {
 
-  @Inject
-  MongoDbFactoryConfig mongoDbFactoryConfig;
+	@Inject
+	MongoDbFactoryConfig mongoDbFactoryConfig;
 
-  @Bean
-  public MongoTemplate mongoTemplate() throws Exception {
-    MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactoryConfig.mongoDbFactory());
-    return mongoTemplate;
-  }
+	@Bean
+	public MongoTemplate mongoTemplate() throws Exception {
+		MongoTemplate mongoTemplate = new MongoTemplate(
+				mongoDbFactoryConfig.mongoDbFactory());
+		return mongoTemplate;
+	}
 
 }

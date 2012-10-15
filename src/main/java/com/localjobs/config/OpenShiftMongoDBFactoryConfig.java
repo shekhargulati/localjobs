@@ -12,17 +12,20 @@ import com.mongodb.Mongo;
 @Profile("openshift")
 public class OpenShiftMongoDBFactoryConfig implements MongoDbFactoryConfig {
 
-  @Override
-  public MongoDbFactory mongoDbFactory() throws Exception {
-    String openshiftMongoDbHost = System.getenv("OPENSHIFT_NOSQL_DB_HOST");
-    int openshiftMongoDbPort = Integer.parseInt(System.getenv("OPENSHIFT_NOSQL_DB_PORT"));
-    String username = System.getenv("OPENSHIFT_NOSQL_DB_USERNAME");
-    String password = System.getenv("OPENSHIFT_NOSQL_DB_PASSWORD");
-    Mongo mongo = new Mongo(openshiftMongoDbHost, openshiftMongoDbPort);
-    UserCredentials userCredentials = new UserCredentials(username, password);
-    String databaseName = "localjobs";
-    MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo, databaseName, userCredentials);
-    return mongoDbFactory;
-  }
+	@Override
+	public MongoDbFactory mongoDbFactory() throws Exception {
+		String openshiftMongoDbHost = System.getenv("OPENSHIFT_NOSQL_DB_HOST");
+		int openshiftMongoDbPort = Integer.parseInt(System
+				.getenv("OPENSHIFT_NOSQL_DB_PORT"));
+		String username = System.getenv("OPENSHIFT_NOSQL_DB_USERNAME");
+		String password = System.getenv("OPENSHIFT_NOSQL_DB_PASSWORD");
+		Mongo mongo = new Mongo(openshiftMongoDbHost, openshiftMongoDbPort);
+		UserCredentials userCredentials = new UserCredentials(username,
+				password);
+		String databaseName = "localjobs";
+		MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo,
+				databaseName, userCredentials);
+		return mongoDbFactory;
+	}
 
 }

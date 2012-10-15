@@ -16,12 +16,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ActiveProfiles("dev")
 public class DevApplicationConfigLoadTest {
 
-  @Inject
-  MongoTemplate mongoTemplate;
+	@Inject
+	MongoTemplate mongoTemplate;
 
-  @Test
-  public void checkIfApplicationContextIsLoadedFine() {
-    assertNotNull(mongoTemplate);
-  }
+	@Test
+	public void checkIfApplicationContextIsLoadedFine() {
+		assertNotNull(mongoTemplate);
+	}
 
 }

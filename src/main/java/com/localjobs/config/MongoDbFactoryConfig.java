@@ -4,6 +4,6 @@ import org.springframework.data.mongodb.MongoDbFactory;
 
 public interface MongoDbFactoryConfig {
 
-  public abstract MongoDbFactory mongoDbFactory() throws Exception;
+	public abstract MongoDbFactory mongoDbFactory() throws Exception;
 
 }
