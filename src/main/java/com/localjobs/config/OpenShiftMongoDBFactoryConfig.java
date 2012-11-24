@@ -14,15 +14,15 @@ public class OpenShiftMongoDBFactoryConfig implements MongoDbFactoryConfig {
 
 	@Override
 	public MongoDbFactory mongoDbFactory() throws Exception {
-		String openshiftMongoDbHost = System.getenv("OPENSHIFT_NOSQL_DB_HOST");
+		String openshiftMongoDbHost = System.getenv("OPENSHIFT_MONGODB_DB_HOST");
 		int openshiftMongoDbPort = Integer.parseInt(System
-				.getenv("OPENSHIFT_NOSQL_DB_PORT"));
-		String username = System.getenv("OPENSHIFT_NOSQL_DB_USERNAME");
-		String password = System.getenv("OPENSHIFT_NOSQL_DB_PASSWORD");
+				.getenv("OPENSHIFT_MONGODB_DB_PORT"));
+		String username = System.getenv("OPENSHIFT_MONGODB_DB_USERNAME");
+		String password = System.getenv("OPENSHIFT_MONGODB_DB_PASSWORD");
 		Mongo mongo = new Mongo(openshiftMongoDbHost, openshiftMongoDbPort);
 		UserCredentials userCredentials = new UserCredentials(username,
 				password);
-		String databaseName = "localjobs";
+		String databaseName = System.getenv("OPENSHIFT_APP_NAME");
 		MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo,
 				databaseName, userCredentials);
 		return mongoDbFactory;
