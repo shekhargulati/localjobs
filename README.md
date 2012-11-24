@@ -24,11 +24,11 @@ git pull -s recursive -X theirs localjobs master
 ```
 rhc app show -a localjobs -l <openshift_login_email>
 
-scp -r jobs-data.json <instance_ssh_access>:localjobs/data
+scp jobs-data.json <instance_ssh_access>:localjobs/data
 
 ssh <instance_ssh_access>
 
-mongoimport -d localjobs -c jobs --file jobs-data.json -u $OPENSHIFT_NOSQL_DB_USERNAME -p $OPENSHIFT_NOSQL_DB_PASSWORD -h $OPENSHIFT_NOSQL_DB_HOST -port $OPENSHIFT_NOSQL_DB_PORT
+mongoimport -d localjobs -c jobs --file jobs-data.json -u $OPENSHIFT_MONGODB_DB_USERNAME -p $OPENSHIFT_MONGODB_DB_PASSWORD -h $OPENSHIFT_MONGODB_DB_HOST -port $OPENSHIFT_MONGODB_DB_PORT
 
 login to database using mongo client and create a 2d index
 > db.jobs.ensureIndex({"location":"2d"})
