@@ -1,12 +1,12 @@
 ## Create an Application 
 
-rhc app create -a localjobs -t jbossas-7 -l <openshift_login_email> -d
+rhc app create -a localjobs -t jbossews-1.0 -l <openshift_login_email> -d
 
 ## Adding MongoDB and RockMongo Client Cartridge
 
 ```
-rhc app cartridge add -a localjobs -c mongodb-2.0 -l <openshift_login_email>
-rhc app cartridge add -a localjobs -c rockmongo-1.1 -l <openshift_login_email>
+rhc cartridge add -a localjobs -c mongodb-2.0 -l <openshift_login_email>
+rhc cartridge add -a localjobs -c rockmongo-1.1 -l <openshift_login_email>
 ```
 
 ## Pulling code from github and pushing to OpenShift
