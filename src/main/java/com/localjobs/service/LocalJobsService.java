@@ -9,8 +9,8 @@ public interface LocalJobsService {
 
 	Job findOneLocalJob(String jobId);
 
-	List<Job> findAllLocalJobsNear(double latitude, double longitude);
+	List<Job> findAllLocalJobsNear(double longitude,double latitude);
 
-	List<Job> findAllLocalJobsNear(double latitude, double longitude,
+	List<Job> findAllLocalJobsNear(double longitude,double latitude, 
 			String name);
 }

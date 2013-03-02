@@ -31,18 +31,18 @@ public class LocalJobsServiceImpl implements LocalJobsService {
 	}
 
 	@Override
-	public List<Job> findAllLocalJobsNear(double latitude, double longitude) {
+	public List<Job> findAllLocalJobsNear(double longitude, double latitude) {
 		Query query = Query
 				.query(Criteria.where("location").near(
-						new Point(latitude, longitude))).limit(5);
+						new Point(longitude, latitude))).limit(5);
 		return mongoTemplate.find(query, Job.class);
 	}
 
 	@Override
-	public List<Job> findAllLocalJobsNear(double latitude, double longitude,
+	public List<Job> findAllLocalJobsNear(double longitude, double latitude,
 			String skill) {
 		Query query = Query.query(
-				Criteria.where("location").near(new Point(latitude, longitude))
+				Criteria.where("location").near(new Point(longitude, latitude))
 						.and("skills").regex(skill, "i")).limit(5);
 		return mongoTemplate.find(query, Job.class);
 	}

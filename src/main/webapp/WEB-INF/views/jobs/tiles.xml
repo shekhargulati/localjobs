@@ -6,5 +6,8 @@
 	<definition name="jobs" extends="page">
 		<put-attribute name="content" value="/WEB-INF/views/jobs/jobs.jsp" />
 	</definition>
-
+	<definition name="geonearjobs" extends="page">
+		<put-attribute name="content" value="/WEB-INF/views/jobs/geonearjobs.jsp" />
+	</definition>
+	
 </tiles-definitions>

@@ -1,4 +1,4 @@
-package com.localjobs.utils;
+package com.localjobs.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;

@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.localjobs.domain.Job;
+import com.localjobs.domain.LocalJobWithDistance;
 import com.localjobs.googleapis.DistanceResponse;
 import com.localjobs.googleapis.GoogleDistanceClient;
+import com.localjobs.service.CoordinateFinder;
 import com.localjobs.service.LocalJobsService;
-import com.localjobs.utils.CoordinateFinder;
-import com.localjobs.vo.LocalJobWithDistance;
 
 @Controller
 public class LocalJobsController {
@@ -33,7 +33,7 @@ public class LocalJobsController {
 
 	@Inject
 	private CoordinateFinder coordinateFinder;
-	
+
 	@RequestMapping("/jobs")
 	public ResponseEntity<String> allJobs() {
 		HttpHeaders headers = new HttpHeaders();
@@ -56,14 +56,13 @@ public class LocalJobsController {
 
 	@RequestMapping("/jobs/near")
 	public String allJobsNearToLatitudeAndLongitude(
-			@RequestParam("latitude") double latitude,
-			@RequestParam("longitude") double longitude,Model model) {
+			@RequestParam("longitude") double longitude,
+			@RequestParam("latitude") double latitude, Model model) {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
 
-		List<Job> jobs = localJobsService.findAllLocalJobsNear(latitude,
-				longitude);
+		List<Job> jobs = localJobsService.findAllLocalJobsNear(longitude,latitude);
 		List<LocalJobWithDistance> localJobsWithDistance = new ArrayList<LocalJobWithDistance>();
 		for (Job localJob : jobs) {
 			DistanceResponse response = googleDistanceClient.findDirections(
@@ -82,13 +81,11 @@ public class LocalJobsController {
 	@RequestMapping("/jobs/near/{skill}")
 	public String allJobsNearLatitideAndLongitudeWithSkill(
 			@PathVariable("skill") String skill,
-			@RequestParam("latitude") double latitude,
-			@RequestParam("longitude") double longitude,Model model) {
+			@RequestParam("longitude") double longitude, @RequestParam("latitude") double latitude, Model model) {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
-		List<LocalJobWithDistance> localJobsWithDistance = findJobs(skill,
-				latitude, longitude);
+		List<LocalJobWithDistance> localJobsWithDistance = findJobs(skill, longitude,latitude);
 		model.addAttribute("jobs", localJobsWithDistance);
 		return "jobs";
 	}
@@ -96,15 +93,17 @@ public class LocalJobsController {
 	@RequestMapping("/jobs/near/{location}/{skill}")
 	public String allJobsNearToLocationWithSkill(
 			@PathVariable("location") String location,
-			@PathVariable("skill") String skill,Model model) throws Exception {
+			@PathVariable("skill") String skill, Model model) throws Exception {
 		long startTime = System.currentTimeMillis();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
 		long startTimeCoordinateFinder = System.currentTimeMillis();
 		double[] coordinates = coordinateFinder.find(location);
 		long endTimeCoordinateFinder = System.currentTimeMillis();
-		System.out.println("Total time taken by CoordinateFinder : "+ (endTimeCoordinateFinder-startTimeCoordinateFinder)/1000+" seconds");
-		
+		System.out.println("Total time taken by CoordinateFinder : "
+				+ (endTimeCoordinateFinder - startTimeCoordinateFinder) / 1000
+				+ " seconds");
+
 		if (ArrayUtils.isEmpty(coordinates)) {
 			return "jobs";
 		}
@@ -112,22 +111,24 @@ public class LocalJobsController {
 		double latitude = coordinates[0];
 		double longitude = coordinates[1];
 		List<LocalJobWithDistance> localJobsWithDistance = findJobs(skill,
-				latitude, longitude);
+				longitude,latitude);
 		model.addAttribute("jobs", localJobsWithDistance);
 		long endTime = System.currentTimeMillis();
-		System.out.println("Total time taken to get allJobsNearToLocationWithSkill() : "+ (endTime-startTime)/1000+" seconds");
+		System.out
+				.println("Total time taken to get allJobsNearToLocationWithSkill() : "
+						+ (endTime - startTime) / 1000 + " seconds");
 		return "jobs";
 	}
-	
-	
-	private List<LocalJobWithDistance> findJobs(String skill, double latitude,
-			double longitude) {
+
+	private List<LocalJobWithDistance> findJobs(String skill,
+			double longitude,double latitude) {
 		long startTimeMongoDB = System.currentTimeMillis();
-		List<Job> jobs = localJobsService.findAllLocalJobsNear(latitude,
-				longitude, skill);
+		List<Job> jobs = localJobsService.findAllLocalJobsNear(
+				longitude, latitude, skill);
 		long endTimeMongoDB = System.currentTimeMillis();
-		
-		System.out.println("Time taken by MongoDB : "+(endTimeMongoDB - startTimeMongoDB)/1000 + " seconds");
+
+		System.out.println("Time taken by MongoDB : "
+				+ (endTimeMongoDB - startTimeMongoDB) / 1000 + " seconds");
 		List<LocalJobWithDistance> locaJobsWithDistance = new ArrayList<LocalJobWithDistance>();
 		long startTimeGoogleDistaceClient = System.currentTimeMillis();
 		for (Job localJob : jobs) {
@@ -140,24 +141,9 @@ public class LocalJobsController {
 			locaJobsWithDistance.add(linkedinJobWithDistance);
 		}
 		long endTimeGoogleDistanceClient = System.currentTimeMillis();
-		System.out.println("Time taken by GoogleDistanceClient : "+(endTimeGoogleDistanceClient - startTimeGoogleDistaceClient)/1000 + " seconds");
-		return locaJobsWithDistance;
-	}
-	
-	private List<LocalJobWithDistance> findJobsWithLocation(double latitude,
-			double longitude) {
-		List<Job> jobs = localJobsService.findAllLocalJobsNear(latitude,
-				longitude);
-		List<LocalJobWithDistance> locaJobsWithDistance = new ArrayList<LocalJobWithDistance>();
-		for (Job localJob : jobs) {
-			DistanceResponse response = googleDistanceClient.findDirections(
-					localJob.getLocation(),
-					new double[] { latitude, longitude });
-			LocalJobWithDistance linkedinJobWithDistance = new LocalJobWithDistance(
-					localJob, response.rows[0].elements[0].distance,
-					response.rows[0].elements[0].duration);
-			locaJobsWithDistance.add(linkedinJobWithDistance);
-		}
+		System.out.println("Time taken by GoogleDistanceClient : "
+				+ (endTimeGoogleDistanceClient - startTimeGoogleDistaceClient)
+				/ 1000 + " seconds");
 		return locaJobsWithDistance;
 	}
 }

@@ -1,10 +1,9 @@
-package com.localjobs.vo;
+package com.localjobs.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.localjobs.domain.Job;
 import com.localjobs.googleapis.Distance;
 import com.localjobs.googleapis.Duration;
 

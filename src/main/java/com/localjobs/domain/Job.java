@@ -1,6 +1,7 @@
 package com.localjobs.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -98,4 +99,14 @@ public class Job {
 				.use("location", Job.class).deserialize(json);
 	}
 
+	@Override
+	public String toString() {
+		return "Job [id=" + id + ", company=" + company + ", jobTitle="
+				+ jobTitle + ", location=" + Arrays.toString(location)
+				+ ", skills=" + Arrays.toString(skills) + ", formattedAddress="
+				+ formattedAddress + "]";
+	}
+
+	
+	
 }
