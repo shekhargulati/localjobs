@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.localjobs.domain.Job;
 import com.localjobs.domain.LocalJobWithDistance;
@@ -21,6 +22,8 @@ import com.localjobs.googleapis.DistanceResponse;
 import com.localjobs.googleapis.GoogleDistanceClient;
 import com.localjobs.service.CoordinateFinder;
 import com.localjobs.service.LocalJobsService;
+import org.springframework.http.MediaType;
+
 
 @Controller
 public class LocalJobsController {
@@ -90,22 +93,24 @@ public class LocalJobsController {
 		return "jobs";
 	}
 
-	@RequestMapping("/jobs/near/{location}/{skill}")
-	public String allJobsNearToLocationWithSkill(
+	@RequestMapping(value = "/jobs/near/{location}/{skill}",produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<LocalJobWithDistance> allJobsNearToLocationWithSkill(
 			@PathVariable("location") String location,
 			@PathVariable("skill") String skill, Model model) throws Exception {
 		long startTime = System.currentTimeMillis();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/json; charset=utf-8");
 		long startTimeCoordinateFinder = System.currentTimeMillis();
-		double[] coordinates = coordinateFinder.find(location);
+		double[] coordinates = {-118.404471, 33.978622}; 
+				//coordinateFinder.find(location);
 		long endTimeCoordinateFinder = System.currentTimeMillis();
 		System.out.println("Total time taken by CoordinateFinder : "
 				+ (endTimeCoordinateFinder - startTimeCoordinateFinder) / 1000
 				+ " seconds");
 
 		if (ArrayUtils.isEmpty(coordinates)) {
-			return "jobs";
+			return null;
 		}
 
 		double latitude = coordinates[0];
@@ -117,7 +122,7 @@ public class LocalJobsController {
 		System.out
 				.println("Total time taken to get allJobsNearToLocationWithSkill() : "
 						+ (endTime - startTime) / 1000 + " seconds");
-		return "jobs";
+		return localJobsWithDistance;
 	}
 
 	private List<LocalJobWithDistance> findJobs(String skill,
