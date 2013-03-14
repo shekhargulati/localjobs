@@ -27,13 +27,9 @@
 				$("#jobSearchForm").mask("Finding Jobs ...");
 				var skills = this.$('input[name=skills]').val().split(',');
 				var address = this.$("#location").val();
-				var company = this.$("#company").val();
-				var strategy = this.$("#strategy").val();
 				
 				console.log("skills : "+skills);
 				console.log("address : "+address);
-				console.log("company : "+company);
-				console.log("strategy : "+strategy);
 				
 				var coordinates;
 				var self = this;

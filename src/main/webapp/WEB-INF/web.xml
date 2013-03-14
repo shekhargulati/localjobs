@@ -7,7 +7,7 @@
 
 	<display-name>localjobs</display-name>
 
-	<description>Demo application</description>
+	<description>LocalJobs : A location aware Job search application</description>
 
 
 	<!-- Enable escaping of form submission contents -->
@@ -28,7 +28,7 @@
 
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
-		<param-value>dev</param-value>
+		<param-value>openshift</param-value>
 	</context-param>
 
 	<filter>

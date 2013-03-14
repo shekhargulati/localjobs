@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.localjobs.domain.Job;
-import com.localjobs.service.CoordinateFinder;
 
 @Controller
 @RequestMapping("/api/jobs")
@@ -31,8 +30,6 @@ public class JobController {
 
 	@Inject
 	MongoTemplate mongoTemplate;
-	@Inject
-	CoordinateFinder coordinateFinder;
 
 	public JobController() {
 	}
