@@ -17,6 +17,8 @@
 			},
 			
 			render : function(){
+				console.log("rendering home page..");
+				$("#results").empty();
 				return this;
 			},
 			
