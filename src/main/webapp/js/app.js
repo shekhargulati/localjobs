@@ -26,21 +26,39 @@
 				$("#results").empty();
 				$("#jobSearchForm").mask("Finding Jobs ...");
 				var skills = this.$('input[name=skills]').val().split(',');
-				var location = this.$("#location").val();
+				var address = this.$("#location").val();
 				var company = this.$("#company").val();
 				var strategy = this.$("#strategy").val();
 				
 				console.log("skills : "+skills);
-				console.log("location : "+location);
+				console.log("address : "+address);
 				console.log("company : "+company);
 				console.log("strategy : "+strategy);
 				
+				var coordinates;
 				var self = this;
-				$.get("api/jobs/"+location+"/"+skills  , function (results){ 
-                    console.log('Found data ... '+results);
-                    $("#jobSearchForm").unmask();
-                    self.renderResults(results,self);
-                }); 
+				geocoder = new google.maps.Geocoder();
+				geocoder.geocode( { 'address': address}, function(results, status) {
+				      if (status == google.maps.GeocoderStatus.OK) {
+				    	  coordinates = results[0].geometry.location;
+				    	  console.log(typeof coordinates);
+				    	  var longitude = coordinates["nb"];
+				    	  var latitude = coordinates["mb"];
+				    	  console.log('longitude .. '+longitude);
+				    	  console.log('latitude .. '+latitude);
+				    	  
+							$.get("api/jobs/"+skills+"/?longitude="+longitude+"&latitude="+latitude  , function (results){ 
+			                    $("#jobSearchForm").unmask();
+			                    self.renderResults(results,self);
+			                });
+				        
+				      } else {
+				        alert("Geocode was not successful for the following reason: " + status);
+				        $("#jobSearchForm").unmask();
+				      }
+				});
+				
+				 
 			},
 			
 			renderResults : function(results,self){
@@ -51,7 +69,6 @@
 			},
 			
 			renderJob : function(result){
-				console.log((result['content']));
 				var jobView = new LocalJobs.JobView({result : result});
 				$("#results").append(jobView.render().el);
 			},
@@ -71,8 +88,6 @@
 					return this;
 				},
 				jobtitle : function(){
-					console.log('in jobTitle : '+this.result);
-					console.log((this.result['content'])['jobTitle']);
 					return (this.result['content'])['jobTitle'];
 				},
 				address : function(){
