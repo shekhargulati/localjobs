@@ -23,7 +23,9 @@
 			findJobs : function(event){
 				console.log('in findJobs()...');
 				event.preventDefault();
-				var skills = this.$('input[name=skills]').val().split(',')
+				$("#results").empty();
+				$("#jobSearchForm").mask("Finding Jobs ...");
+				var skills = this.$('input[name=skills]').val().split(',');
 				var location = this.$("#location").val();
 				var company = this.$("#company").val();
 				var strategy = this.$("#strategy").val();
@@ -36,6 +38,7 @@
 				var self = this;
 				$.get("api/jobs/"+location+"/"+skills  , function (results){ 
                     console.log('Found data ... '+results);
+                    $("#jobSearchForm").unmask();
                     self.renderResults(results,self);
                 }); 
 			},
@@ -75,7 +78,7 @@
 				address : function(){
 					return (this.result['content'])['formattedAddress'];
 				},
-				address : function(){
+				skills : function(){
 					return (this.result['content'])['skills'];
 				},
 				company : function(){
