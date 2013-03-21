@@ -33,15 +33,12 @@
 				console.log("skills : "+skills);
 				console.log("address : "+address);
 				
-				var coordinates;
 				var self = this;
 				geocoder = new google.maps.Geocoder();
 				geocoder.geocode( { 'address': address}, function(results, status) {
 				      if (status == google.maps.GeocoderStatus.OK) {
-				    	  coordinates = results[0].geometry.location;
-				    	  console.log(typeof coordinates);
-				    	  var longitude = coordinates["nb"];
-				    	  var latitude = coordinates["mb"];
+				    	  var longitude = results[0].geometry.location.lng();
+				    	  var latitude = results[0].geometry.location.lat();
 				    	  console.log('longitude .. '+longitude);
 				    	  console.log('latitude .. '+latitude);
 				    	  
